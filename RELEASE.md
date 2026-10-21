@@ -2,7 +2,9 @@
 
 Initial version: **0.1.0**. **PyPI: NOT PUBLISHED** until an upload is independently verified.
 The release workflow builds validated artifacts when a non-prerelease GitHub release with a `v` tag is published.
-The upload job stays disabled unless repository variable `PYPI_PUBLISH_ENABLED` is exactly `true`.
+A separate `github-assets` job automatically attaches the verified wheel and sdist to that GitHub release.
+Only this asset-upload job receives `contents: write`; it uses GitHub's short-lived workflow token.
+The PyPI upload job stays disabled unless repository variable `PYPI_PUBLISH_ENABLED` is exactly `true`.
 
 ## First publication
 
