@@ -18,13 +18,14 @@ result = joinwhy.safe_merge(customers, orders, on="id", relationship="one_to_man
 
 ## Installation
 
-Requires Python 3.11+ and Pandas 2.2+. The initial release is being prepared;
-until a PyPI release is verified, install from a checkout:
+Requires Python 3.11+ and Pandas 2.2+. Version
+[0.1.1 is published on PyPI](https://pypi.org/project/joinwhy/0.1.1/), with
+installation from the public index verified in a fresh environment.
 
 ```bash
-python -m pip install .
-# After the first PyPI release:
 python -m pip install joinwhy
+# Reproduce the verified release:
+python -m pip install "joinwhy==0.1.1"
 ```
 
 The library has no runtime service, telemetry or dependency on the other projects.
@@ -98,7 +99,9 @@ the public API currently chooses Pandas only.
 Version 0.1.1 fixes exact-key preservation for object integer identifiers above
 `2**53` mixed with nulls. Frequencies count Pandas group IDs while retaining
 original representative key rows and their dtypes; they never reconstruct keys
-from inferred numeric group labels. The published 0.1.0 release is retained.
+from inferred numeric group labels. The original
+[GitHub v0.1.0 release](https://github.com/giovannyTorres/joinwhy/releases/tag/v0.1.0)
+is retained; the first PyPI publication is 0.1.1.
 
 ## Reproduce validation and benchmarks
 
