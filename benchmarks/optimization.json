@@ -1,0 +1,66 @@
+{
+  "workload": "Two 1M-row integer-key frames, left keys modulo 500000 and right keys modulo 333333; left join.",
+  "method": "One warmup and three timed perf_counter repetitions per operation; no tracemalloc. Baseline measured before source edits in the same Python environment; concurrent workloads can affect timings.",
+  "baseline_version": "0.1.1",
+  "source_version": "0.1.2",
+  "before": {
+    "python": "3.12.14",
+    "pandas": "3.0.6",
+    "rows_per_frame": 1000000,
+    "audit": {
+      "seconds": [
+        4.499358698000009,
+        4.496708362999996,
+        4.338551733000003
+      ],
+      "median_seconds": 4.496708362999996
+    },
+    "expected_rows": 2333334,
+    "frequencies": {
+      "seconds": [
+        1.8060558840000027,
+        1.9585580039999968,
+        1.9266060119999935
+      ],
+      "median_seconds": 1.9266060119999935
+    },
+    "merge": {
+      "seconds": [
+        0.06437847700000532,
+        0.06605696900000169,
+        0.06901074499999993
+      ],
+      "median_seconds": 0.06605696900000169
+    }
+  },
+  "after": {
+    "python": "3.12.14",
+    "pandas": "3.0.6",
+    "rows_per_frame": 1000000,
+    "audit": {
+      "seconds": [
+        0.625190296999989,
+        0.577597935,
+        0.560412384999978
+      ],
+      "median_seconds": 0.577597935
+    },
+    "expected_rows": 2333334,
+    "frequencies": {
+      "seconds": [
+        0.0458412479999879,
+        0.03513795499998196,
+        0.040443477999986044
+      ],
+      "median_seconds": 0.040443477999986044
+    },
+    "merge": {
+      "seconds": [
+        0.05815577100000269,
+        0.06454020000001037,
+        0.05996414799997751
+      ],
+      "median_seconds": 0.05996414799997751
+    }
+  }
+}

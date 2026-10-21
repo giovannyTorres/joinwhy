@@ -1,35 +1,35 @@
 {
-  "python": "3.13.5",
-  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
   "pandas": "3.0.6",
   "rows_per_frame": 100000,
   "repeats": 5,
   "expected_rows": 233334,
   "manual_pandas": {
     "seconds": [
-      0.011152199999742152,
-      0.012101900000743626,
-      0.01263349999953789,
-      0.011697800000547431,
-      0.01215059999958612
+      0.0059358919999965565,
+      0.006080370000006496,
+      0.005991636999993943,
+      0.006632252999992261,
+      0.005627527999990889
     ],
-    "median_seconds": 0.012101900000743626,
-    "min_seconds": 0.011152199999742152,
-    "max_seconds": 0.01263349999953789,
-    "traced_peak_bytes": 5035320
+    "median_seconds": 0.005991636999993943,
+    "min_seconds": 0.005627527999990889,
+    "max_seconds": 0.006632252999992261,
+    "traced_peak_bytes": 5035814
   },
   "joinwhy": {
     "seconds": [
-      0.5423254999996061,
-      0.5693625999992946,
-      0.5543281999998726,
-      0.5773312999999689,
-      0.5636494000000312
+      0.06517254299998854,
+      0.06451797599999054,
+      0.06370221500000639,
+      0.062178557999999384,
+      0.062094430999991346
     ],
-    "median_seconds": 0.5636494000000312,
-    "min_seconds": 0.5423254999996061,
-    "max_seconds": 0.5773312999999689,
-    "traced_peak_bytes": 14622415
+    "median_seconds": 0.06370221500000639,
+    "min_seconds": 0.062094430999991346,
+    "max_seconds": 0.06517254299998854,
+    "traced_peak_bytes": 14178879
   },
   "notes": "Timing without tracemalloc; memory separately measured. Library also constructs key inspection tables and diagnostics. No performance advantage is claimed."
 }

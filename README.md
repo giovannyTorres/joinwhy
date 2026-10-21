@@ -46,7 +46,8 @@ values are `one_to_one`, `one_to_many`, `many_to_one`, `many_to_many`. These are
 constraints, so one-to-one inputs also satisfy one-to-many. Uniqueness considers
 all input keys, including unmatched keys, consistent with Pandas validation.
 `JoinConstraintError` rejects violated constraints. `JoinAuditError` reports
-invalid configuration or key types Pandas cannot align. Invalid frame objects
+invalid configuration, key types Pandas cannot align, or final merge options/keys
+Pandas rejects. The original Pandas exception is retained as the cause. Invalid frame objects
 raise `TypeError`.
 
 Inspection frames contain `key` tuples (components follow `report.keys`),
@@ -102,6 +103,11 @@ original representative key rows and their dtypes; they never reconstruct keys
 from inferred numeric group labels. The original
 [GitHub v0.1.0 release](https://github.com/giovannyTorres/joinwhy/releases/tag/v0.1.0)
 is retained; the first PyPI publication is 0.1.1.
+
+Version 0.1.2 replaces per-key scalar lookups with vectorized counts and reuses
+key frequencies for null/whitespace row totals. It also keeps materialization
+failures inside the `JoinAuditError` contract. See [CHANGELOG.md](CHANGELOG.md)
+and [RELEASE.md](RELEASE.md) for changes and publication status.
 
 ## Reproduce validation and benchmarks
 

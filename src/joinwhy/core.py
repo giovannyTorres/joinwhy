@@ -59,9 +59,10 @@ class PandasBackend:
         first = ~codes.duplicated()
         counts = codes.value_counts(sort=False)
         result = selected.loc[first].reset_index(drop=True)
-        result["count"] = pd.Series(
-            [int(counts.loc[code]) for code in codes.loc[first]], dtype="int64"
-        )
+        # Reindex all representative group IDs at once. A scalar .loc per key
+        # dominates large audits; the positional array also avoids input-index
+        # alignment when the original frame has duplicate or shuffled labels.
+        result["count"] = counts.reindex(codes.loc[first]).to_numpy(dtype="int64")
         return result
 
     def align(self, left: pd.DataFrame, right: pd.DataFrame) -> pd.DataFrame:
@@ -238,30 +239,25 @@ def audit(
     ld = sum(left_count > 1 for left_count, _ in pairs)
     rd = sum(right_count > 1 for _, right_count in pairs)
     relation = cast(Relationship, f"{'many' if ld else 'one'}_to_{'many' if rd else 'one'}")
-    tuples = list(aligned[[f"k{i}" for i in range(len(keys))]].itertuples(index=False, name=None))
+    aligned_keys = aligned[[f"k{i}" for i in range(len(keys))]]
+    tuples = list(aligned_keys.itertuples(index=False, name=None))
     table = pd.DataFrame(
         {
             "key": tuples,
             "left_count": [left_count for left_count, _ in pairs],
             "right_count": [right_count for _, right_count in pairs],
-            "null_key": [
-                any(pd.api.types.is_scalar(v) and bool(pd.isna(v)) for v in key) for key in tuples
-            ],
+            "null_key": aligned_keys.isna().any(axis=1).to_numpy(),
             "whitespace": [any(_has_whitespace(v) for v in key) for key in tuples],
         }
     )
     # Explicit bool dtype also preserves masks for empty frames.
     table = table.astype({"null_key": bool, "whitespace": bool})
-    ln = int(left.loc[:, keys].isna().any(axis=1).sum())
-    rn = int(right.loc[:, keys].isna().any(axis=1).sum())
-    lw = sum(
-        any(_has_whitespace(v) for v in row)
-        for row in left.loc[:, keys].itertuples(index=False, name=None)
-    )
-    rw = sum(
-        any(_has_whitespace(v) for v in row)
-        for row in right.loc[:, keys].itertuples(index=False, name=None)
-    )
+    # Every observed key already has its original row frequency. Weight these
+    # diagnostic masks instead of rescanning both complete input key frames.
+    ln = int(table.loc[table["null_key"], "left_count"].sum())
+    rn = int(table.loc[table["null_key"], "right_count"].sum())
+    lw = int(table.loc[table["whitespace"], "left_count"].sum())
+    rw = int(table.loc[table["whitespace"], "right_count"].sum())
     warnings: list[str] = []
     for side, duplicates, nulls, whitespace, unmatched in (
         ("left", ld, ln, lw, sum(right_count == 0 for _, right_count in pairs)),
@@ -327,4 +323,12 @@ def safe_merge(
         raise JoinConstraintError(
             f"Predicted {report.expected_rows} rows; expansion {report.expansion:g} exceeds {max_expansion:g}"
         )
-    return left.merge(right, on=list(report.keys), how=how, validate=relationship, **merge_kwargs)
+    try:
+        return left.merge(
+            right, on=list(report.keys), how=how, validate=relationship, **merge_kwargs
+        )
+    except (ValueError, TypeError) as exc:
+        # Grouped representatives and complete input columns can lead pandas to
+        # infer different key compatibility, especially for all-null object keys.
+        # Keep the public error contract even if rejection occurs after preflight.
+        raise JoinAuditError(f"Cannot merge using pandas semantics: {exc}") from exc

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 — 2026-10-21
+
+- Assemble group counts with a vectorized lookup instead of one scalar Pandas lookup per key, retaining exact source key values, dtypes and representative order.
+- Count null and whitespace rows from observed key frequencies instead of rescanning complete input frames; diagnostics still include unmatched keys and count each input row once.
+- Wrap Pandas errors from final merge materialization in `JoinAuditError`, preserving the original exception as the cause, including key compatibility errors that pass preflight.
+- Add regression coverage for mixed null object/integer key dtypes, materialization errors, group count order, duplicate indexes, and weighted composite-key diagnostics.
+
 ## 0.1.1 — 2026-10-21
 
 - Preserve exact original join-key values and dtypes when counting observed groups.

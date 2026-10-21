@@ -1,6 +1,7 @@
 # Release procedure and publication state
 
-Current version: **0.1.1**. **PyPI: PUBLISHED** at
+Current source version: **0.1.2**. Publication and public-index installation of
+0.1.2 are pending. Last verified release: **0.1.1**, **PyPI: PUBLISHED** at
 [joinwhy 0.1.1](https://pypi.org/project/joinwhy/0.1.1/).
 Installation from the public index was verified in a fresh environment, including
 `pip check`, the isolated quickstart, wheel hash and installed source identity.
@@ -46,3 +47,4 @@ PyPI cannot replace files of an already uploaded version; fixes need a new versi
 - Workflow actions are pinned to upstream tag commit SHAs verified on 2026-10-21: checkout 7.0.1, setup-python 7.0.0, upload-artifact 7.0.2, download-artifact 8.0.2, pypa/gh-action-pypi-publish 1.14.2.
 
 This file records the verified 0.1.1 publication and the procedure for future releases.
+Version 0.1.2 must be verified on the public index before recording it as published.
