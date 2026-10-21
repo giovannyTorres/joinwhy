@@ -82,7 +82,7 @@ guardrail. It does not replace Pandas. See [RESEARCH.md](RESEARCH.md) for the
 comparison with [joinspy](https://github.com/gcol33/joinspy) and
 [powerjoin](https://github.com/moodymudskipper/powerjoin), the R inspiration.
 
-Version 0.1.0 supports Pandas equality joins on same-named, uniquely labeled
+Version 0.1.x supports Pandas equality joins on same-named, uniquely labeled
 string columns. No index joins, cross/as-of/fuzzy joins, Polars adapter, automatic
 repair, case-normalization guesses or post-join lineage are provided. Hashable
 scalar or tuple key values follow Pandas grouping behavior. Mutable/unhashable
@@ -94,6 +94,11 @@ they do not assert that two different identifiers should match.
 `FrequencyBackend` and `PandasBackend` define a small adapter boundary for future
 backends. Alternate backends must implement their own null equality semantics;
 the public API currently chooses Pandas only.
+
+Version 0.1.1 fixes exact-key preservation for object integer identifiers above
+`2**53` mixed with nulls. Frequencies count Pandas group IDs while retaining
+original representative key rows and their dtypes; they never reconstruct keys
+from inferred numeric group labels. The published 0.1.0 release is retained.
 
 ## Reproduce validation and benchmarks
 

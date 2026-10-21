@@ -1,6 +1,7 @@
 # Release procedure and publication state
 
-Initial version: **0.1.0**. **PyPI: NOT PUBLISHED** until an upload is independently verified.
+Current version: **0.1.1**. **PyPI: NOT PUBLISHED** until an upload is independently verified.
+The existing GitHub 0.1.0 release remains unchanged; 0.1.1 contains the exact-key precision correction.
 The release workflow builds validated artifacts when a non-prerelease GitHub release with a `v` tag is published.
 A separate `github-assets` job automatically attaches the verified wheel and sdist to that GitHub release.
 Only this asset-upload job receives `contents: write`; it uses GitHub's short-lived workflow token.
@@ -21,9 +22,9 @@ The PyPI upload job stays disabled unless repository variable `PYPI_PUBLISH_ENAB
 | Environment | `pypi` |
 
 4. Create GitHub environment `pypi` in this repository. If available on the account, require owner approval and restrict deployments to release tags. Add the repository variable only after these checks and confirmation.
-5. Ensure CI is green. Publish the GitHub release `v0.1.0` from the reviewed main commit. Only the isolated publish job receives `id-token: write`; no PyPI token is stored.
+5. Ensure CI is green. Publish the GitHub release `v0.1.1` from the reviewed main commit. Only the isolated publish job receives `id-token: write`; no PyPI token is stored.
 6. If the release was created before enabling uploads, rerun the Release workflow only after enabling and reviewing the publisher settings.
-7. Verify the public PyPI project and install `joinwhy==0.1.0` in a fresh environment from the public index. Update this publication state only after that succeeds.
+7. Verify the public PyPI project and install `joinwhy==0.1.1` in a fresh environment from the public index. Update this publication state only after that succeeds.
 
 ## Future versions
 

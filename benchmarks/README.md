@@ -14,13 +14,13 @@ forecast, duplicate-key counts and unmatched-key counts agree with joinwhy.
 One warmup precedes five timed repetitions. A separate untimed execution under
 tracemalloc records peak traced Python allocation. It does not measure process
 RSS or all native array allocations. Environment and raw repetitions appear
-in [results.json](results.json). Initial measurement on Python 3.13.5,
+in [results.json](results.json). Measurement for **joinwhy 0.1.1** on Python 3.13.5,
 Pandas 3.0.6, Windows 11:
 
 | Workflow | Median seconds | Range seconds | Traced peak bytes |
 |---|---:|---:|---:|
-| Manual Pandas counts and checks | 0.011917 | 0.011251–0.013430 | 5,036,152 |
-| joinwhy audit | 0.203938 | 0.183513–0.234503 | 14,617,840 |
+| Manual Pandas counts and checks | 0.012102 | 0.011152–0.012633 | 5,035,320 |
+| joinwhy audit | 0.563649 | 0.542325–0.577331 | 14,622,415 |
 
 joinwhy is slower on this dataset. It additionally constructs diagnostic key
 tables, scans literal whitespace, counts null rows, and produces a report with
@@ -30,3 +30,9 @@ join is not the timing baseline because the output itself is not required for
 either diagnostic workflow. No universal performance claim follows from this
 single synthetic workload. Run the script on representative data before choosing
 an operational budget.
+
+Version 0.1.1 counts public Pandas group IDs and retains original key rows to
+preserve large object integer identifiers beside nulls. The additional
+representative-row and count assembly has a measurable cost in this run;
+correct key identity takes priority over aggregation speed. The published
+0.1.0 release remains available, with its original measurements.

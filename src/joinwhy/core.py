@@ -24,7 +24,7 @@ class JoinConstraintError(JoinAuditError):
 class FrequencyBackend(Protocol):
     """Small adapter boundary: frequency preparation and backend null semantics.
 
-    Only PandasBackend is supported by the public API in 0.1.0. Future adapters
+    Only PandasBackend is supported by the public API in 0.1.x. Future adapters
     must supply their own alignment semantics, rather than inherit Pandas null
     equality accidentally.
     """
@@ -48,11 +48,21 @@ class PandasBackend:
     def frequencies(self, frame: pd.DataFrame, keys: list[str]) -> pd.DataFrame:
         selected = frame.loc[:, keys].copy()
         selected.columns = [f"k{i}" for i in range(len(keys))]
-        return (
-            selected.groupby(list(selected.columns), dropna=False, observed=True, sort=False)
-            .size()
-            .reset_index(name="count")
+        # Group IDs retain exact equality even when pandas infers lossy numeric
+        # labels for a groupby index (e.g. object ints above 2**53 beside null).
+        # Keep representative rows from the original columns instead of rebuilding
+        # keys from those labels. This also preserves extension and categorical
+        # dtypes, and assigns counts positionally despite duplicate input indexes.
+        codes = selected.groupby(
+            list(selected.columns), dropna=False, observed=True, sort=False
+        ).ngroup()
+        first = ~codes.duplicated()
+        counts = codes.value_counts(sort=False)
+        result = selected.loc[first].reset_index(drop=True)
+        result["count"] = pd.Series(
+            [int(counts.loc[code]) for code in codes.loc[first]], dtype="int64"
         )
+        return result
 
     def align(self, left: pd.DataFrame, right: pd.DataFrame) -> pd.DataFrame:
         names = [name for name in left.columns if name != "count"]
