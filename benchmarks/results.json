@@ -1,0 +1,35 @@
+{
+  "python": "3.13.5",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "pandas": "3.0.6",
+  "rows_per_frame": 100000,
+  "repeats": 5,
+  "expected_rows": 233334,
+  "manual_pandas": {
+    "seconds": [
+      0.02012009999998554,
+      0.01902860000018336,
+      0.01955729999963296,
+      0.015399100000195176,
+      0.01580019999983051
+    ],
+    "median_seconds": 0.01902860000018336,
+    "min_seconds": 0.015399100000195176,
+    "max_seconds": 0.02012009999998554,
+    "traced_peak_bytes": 5036152
+  },
+  "joinwhy": {
+    "seconds": [
+      0.1888453000001391,
+      0.21647219999977096,
+      0.202557699999943,
+      0.20160409999971307,
+      0.2067379999998593
+    ],
+    "median_seconds": 0.202557699999943,
+    "min_seconds": 0.1888453000001391,
+    "max_seconds": 0.21647219999977096,
+    "traced_peak_bytes": 14617890
+  },
+  "notes": "Timing without tracemalloc; memory separately measured. Library also constructs key inspection tables and diagnostics. No performance advantage is claimed."
+}
