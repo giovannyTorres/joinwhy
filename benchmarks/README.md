@@ -19,8 +19,8 @@ Pandas 3.0.6, Windows 11:
 
 | Workflow | Median seconds | Range seconds | Traced peak bytes |
 |---|---:|---:|---:|
-| Manual Pandas counts and checks | 0.0190 | 0.0154–0.0201 | 5,036,152 |
-| joinwhy audit | 0.2026 | 0.1888–0.2165 | 14,617,890 |
+| Manual Pandas counts and checks | 0.011917 | 0.011251–0.013430 | 5,036,152 |
+| joinwhy audit | 0.203938 | 0.183513–0.234503 | 14,617,840 |
 
 joinwhy is slower on this dataset. It additionally constructs diagnostic key
 tables, scans literal whitespace, counts null rows, and produces a report with

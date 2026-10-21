@@ -7,29 +7,29 @@
   "expected_rows": 233334,
   "manual_pandas": {
     "seconds": [
-      0.02012009999998554,
-      0.01902860000018336,
-      0.01955729999963296,
-      0.015399100000195176,
-      0.01580019999983051
+      0.012793199999578064,
+      0.0119170000007216,
+      0.01169229999959498,
+      0.011251400000219292,
+      0.013429600000563369
     ],
-    "median_seconds": 0.01902860000018336,
-    "min_seconds": 0.015399100000195176,
-    "max_seconds": 0.02012009999998554,
+    "median_seconds": 0.0119170000007216,
+    "min_seconds": 0.011251400000219292,
+    "max_seconds": 0.013429600000563369,
     "traced_peak_bytes": 5036152
   },
   "joinwhy": {
     "seconds": [
-      0.1888453000001391,
-      0.21647219999977096,
-      0.202557699999943,
-      0.20160409999971307,
-      0.2067379999998593
+      0.1835133999993559,
+      0.2039377000000968,
+      0.23450310000043828,
+      0.22098120000009658,
+      0.19114340000032826
     ],
-    "median_seconds": 0.202557699999943,
-    "min_seconds": 0.1888453000001391,
-    "max_seconds": 0.21647219999977096,
-    "traced_peak_bytes": 14617890
+    "median_seconds": 0.2039377000000968,
+    "min_seconds": 0.1835133999993559,
+    "max_seconds": 0.23450310000043828,
+    "traced_peak_bytes": 14617840
   },
   "notes": "Timing without tracemalloc; memory separately measured. Library also constructs key inspection tables and diagnostics. No performance advantage is claimed."
 }
