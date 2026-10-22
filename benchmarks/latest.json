@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-10-22T05:56:23.524155+00:00",
+  "package": "joinwhy",
+  "versions": {
+    "joinwhy": "0.1.2",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4"
+  },
+  "python": "3.13.5",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD",
+  "logical_cpus": 16,
+  "base_commit": "4e33e1927b39af5e9db4f1a4362fc0897bcafa17",
+  "source_sha256_lf": {
+    "benchmarks/reproduce.py": "f1b6734c0f326bd31d61f33ef4a518ee7caa99fa47dc959675d0b2bb29f6883a",
+    "benchmarks/benchmark.py": "b502121a3f74c27abcdf913982083e85e8467d674a0a50bf0062dc54d0f38f66",
+    "examples/comparison.py": "a6589d22ae132df7e8326fe482cf00946c8fcacaba5c74b432178fe6fad0eafd",
+    "examples/cookbook.py": "e25680aa1050d5dd537ef70e42f35a3af643a4fd8a149d8590683ffb5e6cb650"
+  },
+  "command": "python benchmarks/reproduce.py --repeat 5",
+  "quick": false,
+  "repeats": 5,
+  "warmup_per_operation": 2,
+  "memory_repeats": 2,
+  "methodology": {
+    "time": "interleaved rotating order; perf_counter; GC collection before sample outside timer; input construction excluded",
+    "memory": "separate tracemalloc passes, result alive; Python allocation peak, not total RSS; input construction excluded",
+    "accuracy": "differential assertions before timing; comparison and cookbook assertions also executed",
+    "ease_of_use": "physical lines and AST statements in comparison functions, excluding fixtures and imports; a code-size proxy, not a user study",
+    "limitations": "deterministic synthetic workloads; one host; diagnostics differ in scope; no statistical confidence intervals or R execution comparison"
+  },
+  "comparison_code_size": {
+    "baseline": {
+      "physical_lines": 5,
+      "statements": 4
+    },
+    "library": {
+      "physical_lines": 2,
+      "statements": 1
+    }
+  },
+  "workloads": [
+    {
+      "input_size": 1000,
+      "accuracy": {
+        "expected_rows": 2334,
+        "left_duplicate_keys": 500,
+        "right_duplicate_keys": 333,
+        "left_unmatched_keys": 167,
+        "right_unmatched_keys": 0
+      },
+      "measurements": {
+        "baseline": {
+          "seconds": [
+            0.001859800000602263,
+            0.001872400000138441,
+            0.0021360999999160413,
+            0.0021200000001044828,
+            0.0018255000004501198
+          ],
+          "median_seconds": 0.001872400000138441,
+          "min_seconds": 0.0018255000004501198,
+          "max_seconds": 0.0021360999999160413,
+          "traced_peak_bytes": [
+            73850,
+            75898
+          ],
+          "median_peak_bytes": 74874.0
+        },
+        "joinwhy": {
+          "seconds": [
+            0.00910089999979391,
+            0.007425000000694126,
+            0.008095799999864539,
+            0.0072106000006897375,
+            0.00828189999992901
+          ],
+          "median_seconds": 0.008095799999864539,
+          "min_seconds": 0.0072106000006897375,
+          "max_seconds": 0.00910089999979391,
+          "traced_peak_bytes": [
+            166073,
+            169069
+          ],
+          "median_peak_bytes": 167571.0
+        }
+      }
+    },
+    {
+      "input_size": 10000,
+      "accuracy": {
+        "expected_rows": 23334,
+        "left_duplicate_keys": 5000,
+        "right_duplicate_keys": 3333,
+        "left_unmatched_keys": 1667,
+        "right_unmatched_keys": 0
+      },
+      "measurements": {
+        "baseline": {
+          "seconds": [
+            0.0025759000000107335,
+            0.0025906999999278923,
+            0.0025310999999419437,
+            0.002845600000000559,
+            0.002708300000449526
+          ],
+          "median_seconds": 0.0025906999999278923,
+          "min_seconds": 0.0025310999999419437,
+          "max_seconds": 0.002845600000000559,
+          "traced_peak_bytes": [
+            577224,
+            579322
+          ],
+          "median_peak_bytes": 578273.0
+        },
+        "joinwhy": {
+          "seconds": [
+            0.012274300000171934,
+            0.012413800000103947,
+            0.01375000000007276,
+            0.014349199999742268,
+            0.013229600000158825
+          ],
+          "median_seconds": 0.013229600000158825,
+          "min_seconds": 0.012274300000171934,
+          "max_seconds": 0.014349199999742268,
+          "traced_peak_bytes": [
+            1447804,
+            1451097
+          ],
+          "median_peak_bytes": 1449450.5
+        }
+      }
+    },
+    {
+      "input_size": 50000,
+      "accuracy": {
+        "expected_rows": 116668,
+        "left_duplicate_keys": 25000,
+        "right_duplicate_keys": 16666,
+        "left_unmatched_keys": 8334,
+        "right_unmatched_keys": 0
+      },
+      "measurements": {
+        "baseline": {
+          "seconds": [
+            0.00554069999998319,
+            0.0047338999993371544,
+            0.004817899999579822,
+            0.004875499999798194,
+            0.006542599999193044
+          ],
+          "median_seconds": 0.004875499999798194,
+          "min_seconds": 0.0047338999993371544,
+          "max_seconds": 0.006542599999193044,
+          "traced_peak_bytes": [
+            2409624,
+            2411672
+          ],
+          "median_peak_bytes": 2410648.0
+        },
+        "joinwhy": {
+          "seconds": [
+            0.041712100000040664,
+            0.04108589999941614,
+            0.040802000000439875,
+            0.042168199999650824,
+            0.040069300000141084
+          ],
+          "median_seconds": 0.04108589999941614,
+          "min_seconds": 0.040069300000141084,
+          "max_seconds": 0.042168199999650824,
+          "traced_peak_bytes": [
+            7193492,
+            7197027
+          ],
+          "median_peak_bytes": 7195259.5
+        }
+      }
+    }
+  ]
+}
